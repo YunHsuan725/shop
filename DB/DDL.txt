@@ -1,0 +1,35 @@
+-- shoppingmall.`order` definition
+
+CREATE TABLE `order` (
+  `OrderId` varchar(20) NOT NULL,
+  `MemberId` int NOT NULL,
+  `Price` decimal(10,0) NOT NULL,
+  `PayStatus` bit(1) NOT NULL,
+  PRIMARY KEY (`OrderId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- shoppingmall.orderdetail definition
+
+CREATE TABLE `orderdetail` (
+  `OrderItemSN` int NOT NULL AUTO_INCREMENT,
+  `OrderId` varchar(20) NOT NULL,
+  `ProductId` varchar(5) NOT NULL,
+  `Quantity` int NOT NULL,
+  `StandPrice` decimal(10,0) NOT NULL,
+  `ItemPrice` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`OrderItemSN`),
+  KEY `orderDetail_product_FK` (`ProductId`),
+  KEY `orderDetail_order_FK` (`OrderId`),
+  CONSTRAINT `orderDetail_order_FK` FOREIGN KEY (`OrderId`) REFERENCES `order` (`OrderId`),
+  CONSTRAINT `orderDetail_product_FK` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- shoppingmall.product definition
+
+CREATE TABLE `product` (
+  `ProductId` varchar(5) NOT NULL,
+  `ProductName` varchar(100) NOT NULL,
+  `Price` decimal(10,0) NOT NULL,
+  `Quantity` int NOT NULL,
+  PRIMARY KEY (`ProductId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
